@@ -17,34 +17,17 @@
 	<div class="col-md-12 top-20 padding-0">
 	  <div class="col-md-12">
 
-    <?=form_open_multipart('admin/tambah-berita')?>
+    <?=form_open_multipart('admin/tambah-informasi')?>
         <div class="panel">
           <div class="panel-heading">
-            <h4>Cover</h4>
+            <h4>Attachment</h4>
           </div>
 	        <div class="panel-body">
            <div class="row">
               <div class="col-lg-12">
                 <div class="input-group fileupload-v1">
-                    <input type="file" name="cover" class="fileupload-v1-file hidden"/>
-                    <input type="text" class="form-control fileupload-v1-path" placeholder="File..." disabled>
-                    <span class="input-group-btn">
-                      <button class="btn fileupload-v1-btn" type="button"><i class="fa fa-folder"></i> Cari File</button>
-                    </span>
+                    <input type="file" name="attachment[]" multiple class="form-control-file"/>
                 </div><!-- /input-group -->
-              </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-	        </div>
-	      </div>
-
-        <div class="panel">
-          <div class="panel-heading">
-            <h4>Title</h4>
-          </div>
-	        <div class="panel-body">
-           <div class="row">
-              <div class="col-lg-12">
-                    <input type="text" class="form-control fileupload-v1-path" name="title">
               </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
 	        </div>
@@ -85,44 +68,43 @@
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image responsivefilemanager",
             height: 600,
             // without images_upload_url set, Upload tab won't show up
-            images_upload_url: '<?=base_url('upload.php')?>',
+            images_upload_url: '<?=base_url('admin/upload-tinymce')?>',
             relative_urls : false,
             remove_script_host : false,
             document_base_url : "<?=base_url()?>",
             convert_urls : true,
-            
+
             // override default upload handler to simulate successful upload
             images_upload_handler: function (blobInfo, success, failure) {
                 var xhr, formData;
-              
+
                 xhr = new XMLHttpRequest();
                 xhr.withCredentials = false;
-                xhr.open('POST', '<?=base_url('upload.php')?>');
-              
+                xhr.open('POST', '<?=base_url('admin/upload-tinymce')?>');
+
                 xhr.onload = function() {
                     var json;
-                
+
                     if (xhr.status != 200) {
                         failure('HTTP Error: ' + xhr.status);
                         return;
                     }
-                
+
                     json = JSON.parse(xhr.responseText);
-                
+
                     if (!json || typeof json.location != 'string') {
                         failure('Invalid JSON: ' + xhr.responseText);
                         return;
                     }
-                
+
                     success(json.location);
                 };
-              
+
                 formData = new FormData();
                 formData.append('file', blobInfo.blob(), blobInfo.filename());
-              
+
                 xhr.send(formData);
             },
       });
     });
 </script>
-

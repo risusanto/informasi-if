@@ -18,7 +18,7 @@
 	                <div class="col-md-12">
 	                  <div class="panel">
                       <div class="panel-heading">
-                          <a href="<?=base_url('admin/tambah-berita')?>" class="btn btn-default">Tambah Berita <span class="fa fa-plus"></span></a>
+                          <a href="<?=base_url('admin/tambah-informasi')?>" class="btn btn-default">Tambah Berita <span class="fa fa-plus"></span></a>
                         </div>
 	                    <div class="panel-body">
                         <div class="responsive-table">
@@ -39,7 +39,7 @@
 																<td><?=$row->username?></td>
                                 <td width="100">
                                   <a href="#" target="_blank" class="btn btn-primary">Preview <span class="fa fa-eye"></span></a>
-                                  <a href="#" class="btn btn-success">Edit <span class="fa fa-pencil"></span></a>
+                                  <a href="<?=base_url('admin/edit-informasi?id='.$row->id_info)?>" class="btn btn-success">Edit <span class="fa fa-pencil"></span></a>
                                   <button class="btn btn-danger" onclick="delete_data('<?=$row->id_info?>')">Delete <span class="fa fa-trash"></span></button>
                                 </td>
                               </tr>
@@ -85,8 +85,8 @@
             .then((result) => {
               if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('admin/delete-post') ?>",
-                    type: 'GET',
+                    url: "<?= base_url('admin/informasi') ?>",
+                    type: 'POST',
                     data: {
                         ID : id,
                         delete : true

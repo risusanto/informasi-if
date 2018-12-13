@@ -72,9 +72,11 @@
         <?php $lastID = $post['id_info']; ?>
         <?php endforeach; ?>
   </div>
-
-  <a id="btn-more-button" href="#" lastID="<?= $lastID ?>" class="btn btn-control btn-more" data-container="newsfeed-items-grid"><svg class="olymp-three-dots-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
-
+  <?php if ($postNum > $postLimit): ?>
+    <a id="btn-more-button" href="#" lastID="<?= $lastID ?>" class="btn btn-control btn-more" data-container="newsfeed-items-grid"><svg class="olymp-three-dots-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+    <?php else: ?>
+      <a id="btn-more-button" href="#" lastID="0" class="btn btn-control btn-more" data-container="newsfeed-items-grid">End</a>
+  <?php endif; ?>
 </main>
 
 <!-- ... end Main Content -->

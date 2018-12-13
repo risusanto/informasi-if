@@ -25,6 +25,10 @@ class Home extends MY_Controller {
 	 */
 	public function index()
 	{
+		// Get post rows num
+		$this->data['postNum'] = count($this->Informasi_m->get());
+		$this->data['postLimit'] = $this->data['per_page'];
+
 		$cond['order_by'] = 'id_info DESC';
 		$cond['limit'] = $this->data['per_page'];
 		$this->data['posts'] = $this->Informasi_m->getRows($cond);

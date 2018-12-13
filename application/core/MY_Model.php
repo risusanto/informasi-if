@@ -68,6 +68,7 @@ class MY_Model extends CI_Model
 		if (is_string($cond) && strlen($cond) > 3)
 			$this->db->where($cond);
 
+		$this->db->order_by($this->data['primary_key'], 'DESC');
 		$query = $this->db->get($this->data['table_name']);
 
 		return $query->result();
