@@ -40,6 +40,19 @@
 
           <p><?=$post['isi']?></p>
 
+          <?php
+            $files = $this->Download_m->get(['id_info' => $post['id_info']]);
+           ?>
+           <?php if (count($files) > 0): ?>
+             <strong>File(s):</strong>
+             <ol>
+               <?php foreach ($files as $file): ?>
+                 <li> <a href="<?=base_url('assets/content/uploads/'.$file->file)?>" download><?=$file->file?></a> </li>
+               <?php endforeach; ?>
+             </ol>
+             <br>
+           <?php endif; ?>
+
           <div class="post-additional-info inline-items">
 
 

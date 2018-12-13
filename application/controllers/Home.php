@@ -11,9 +11,23 @@ class Home extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-
-		$models = ['Informasi_m'];
+		$this->data['username'] = $this->session->userdata('username');
+		$this->data['role'] = $this->session->userdata('role');
+		if(!isset($this->data['username']) || !isset($this->data['role'])){
+			$this->data['username'] = 'guest';
+			$this->data['role'] = 'guest';
+		}
+		$models = ['Informasi_m','Download_m','Komentar_m','Mahasiswa_m','Dosen_m','Admin_m'];
 		$this->load->model($models);
+		if ($this->data['role'] == 'mahasiswa') {
+			$this->data['profil'] = $this->Mahasiswa_m->get_row(['username' => $this->data['username']]);
+		}
+		if ($this->data['role'] == 'dosen') {
+			$this->data['profil'] = $this->Dosen_m->get_row(['username' => $this->data['username']]);
+		}
+		if ($this->data['role'] == 'admin') {
+			$this->data['profil'] = $this->Admin_m->get_row(['username' => $this->data['username']]);
+		}
 
 		$this->data['per_page'] = 4;
 	}
@@ -57,5 +71,30 @@ class Home extends MY_Controller {
 
 		// Pass data to view
     $this->load->view('home/load-more-data', $this->data, false);
+	}
+
+	public function post_detail()
+	{
+		$id = $this->input->get('id');
+		$this->data['post'] = $this->Informasi_m->get_row(['id_info' => $id]);
+		if (!isset($id) || !isset($this->data['post'])) {
+			redirect('home');
+			exit;
+		}
+		if ($this->POST('komentar')) {
+			$data = [
+				'isi_komentar' => $this->POST('data'),
+				'id_info' => $id,
+				'username' => $this->data['username']
+			];
+			$this->Komentar_m->insert($data);
+			redirect('home/post-detail?id='.$id);
+			exit;
+		}
+		$this->data['comments'] = $this->Komentar_m->get(['id_info' => $id]);
+
+		$this->data['content'] = 'home/info-detail';
+		$this->data['title'] = 'Detail Informasi - '.$this->title;
+		$this->template($this->data);
 	}
 }

@@ -44,11 +44,24 @@
 
 						<p><?=$post['isi']?></p>
 
+            <?php
+              $files = $this->Download_m->get(['id_info' => $post['id_info']]);
+             ?>
+             <?php if (count($files) > 0): ?>
+               <strong>File(s):</strong>
+               <ol>
+                 <?php foreach ($files as $file): ?>
+                   <li> <a href="<?=base_url('assets/content/uploads/'.$file->file)?>" download><?=$file->file?></a> </li>
+                 <?php endforeach; ?>
+               </ol>
+               <br>
+             <?php endif; ?>
+
 						<div class="post-additional-info inline-items">
 
 
 							<div class="comments-shared">
-								<a href="#" class="post-add-icon inline-items">
+								<a href="<?=base_url('home/post-detail?id='.$post['id_info'])?>" class="post-add-icon inline-items">
 									<svg class="olymp-speech-balloon-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
 									<span>16</span>
 								</a>
@@ -59,7 +72,7 @@
 
 						<div class="control-block-button post-control-button">
 
-							<a href="#" class="btn btn-control">
+							<a href="<?=base_url('home/post-detail?id='.$post['id_info'])?>" class="btn btn-control">
 								<svg class="olymp-comments-post-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
 							</a>
 
