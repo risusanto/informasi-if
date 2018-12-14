@@ -4,36 +4,32 @@
   <div class="ui-block">
 
         <!-- Post -->
-
+        <?php
+          $role_temp = $this->User_m->get_row(['username' => $post['username']])->role;
+          if ($role_temp == 'admin' ) {
+            $author = $this->Admin_m->get_row(['username' => $post['username']]);
+          }
+          if ($role_temp == 'dosen' ) {
+            $author = $this->Dosen_m->get_row(['username' => $post['username']]);
+          }
+         ?>
         <article class="hentry post has-post-thumbnail">
 
           <div class="post__author author vcard inline-items">
-            <img src="<?=base_url('assets/')?>img/author-page.jpg" alt="author">
+            <?php if ($role_temp == 'admin'): ?>
+              <img src="<?=base_url('assets/')?>img/avatar1.jpg" alt="author">
+            <?php endif; ?>
+            <?php if ($role_temp == 'dosen'): ?>
+              <img src="<?=base_url('assets/')?>img/avatar12-sm.jpg" alt="author">
+            <?php endif; ?>
 
             <div class="author-date">
-              <a class="h6 post__author-name fn" href="02-ProfilePage.html"><?=$post['username']?></a>
+              <a class="h6 post__author-name fn" href="javascript:void()"><?=$author->nama?></a>
               <div class="post__date">
                 <time class="published" datetime="<?=$post['date']?>">
                   <?=$post['date']?>
                 </time>
               </div>
-            </div>
-
-            <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
-              <ul class="more-dropdown">
-                <li>
-                  <a href="#">Edit Post</a>
-                </li>
-                <li>
-                  <a href="#">Delete Post</a>
-                </li>
-                <li>
-                  <a href="#">Turn Off Notifications</a>
-                </li>
-                <li>
-                  <a href="#">Select as Featured</a>
-                </li>
-              </ul>
             </div>
 
           </div>
@@ -54,12 +50,13 @@
            <?php endif; ?>
 
           <div class="post-additional-info inline-items">
-
-
+            <?php
+              $comments = $this->Komentar_m->get(['id_info' => $post['id_info']]);
+             ?>
             <div class="comments-shared">
-              <a href="#" class="post-add-icon inline-items">
+              <a href="<?=base_url('home/post-detail?id='.$post['id_info'])?>" class="post-add-icon inline-items">
                 <svg class="olymp-speech-balloon-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
-                <span>16</span>
+                <span><?=count($comments)?></span>
               </a>
             </div>
 

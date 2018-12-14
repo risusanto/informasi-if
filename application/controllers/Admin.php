@@ -8,10 +8,30 @@ class Admin extends MY_Controller
 
   function __construct()
   {
+
     parent::__construct();
-    $models = ['Informasi_m','Download_m'];
+    $this->data['username'] = $this->session->userdata('username');
+		$this->data['role'] = $this->session->userdata('role');
+    if (!isset($this->data['role'])) {
+      $this->flashmsg('Autentikasi gagal!','warning');
+      redirect('home');
+      exit;
+    }
+    $auth = ['admin','dosen'];
+    if (!in_array($this->data['role'],$auth)) {
+      $this->flashmsg('Access denied','danger');
+      redirect('home');
+      exit;
+    }
+    $models = ['Informasi_m','Download_m','Admin_m','Dosen_m'];
     $this->load->model($models);
-    $this->data['username'] = 'Admin';
+
+		if ($this->data['role'] == 'dosen') {
+			$this->data['profil'] = $this->Dosen_m->get_row(['username' => $this->data['username']]);
+		}
+		if ($this->data['role'] == 'admin') {
+			$this->data['profil'] = $this->Admin_m->get_row(['username' => $this->data['username']]);
+		}
   }
 
   public function index()
@@ -34,6 +54,10 @@ class Admin extends MY_Controller
       exit;
     }
     $this->data['posts'] = $this->Informasi_m->get();
+
+    if ($this->data['role'] == 'dosen') {
+      $this->data['posts'] = $this->Informasi_m->get(['username' => $this->data['username']]);
+    }
 
     $this->data['content'] = 'admin/informasi';
     $this->data['title'] = 'Informasi';
@@ -164,6 +188,18 @@ class Admin extends MY_Controller
         // Notify editor that the upload failed
         header("HTTP/1.1 500 Server Error");
     }
+  }
+
+  public function pin_post()
+  {
+    $id = $this->POST('ID');
+    $this->Informasi_m->update($id,['pinned' => 1]);
+  }
+
+  public function unpin_post()
+  {
+    $id = $this->POST('ID');
+    $this->Informasi_m->update($id,['pinned' => 0]);
   }
 
 

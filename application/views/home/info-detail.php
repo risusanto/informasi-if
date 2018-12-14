@@ -20,23 +20,6 @@
 								</div>
 							</div>
 
-							<div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
-								<ul class="more-dropdown">
-									<li>
-										<a href="#">Edit Post</a>
-									</li>
-									<li>
-										<a href="#">Delete Post</a>
-									</li>
-									<li>
-										<a href="#">Turn Off Notifications</a>
-									</li>
-									<li>
-										<a href="#">Select as Featured</a>
-									</li>
-								</ul>
-							</div>
-
 						</div>
 
 						<p><?=$post->isi?></p>
@@ -60,7 +43,7 @@
 							<div class="comments-shared">
 								<a href="<?=base_url('home/post-detail?id='.$post->id_info)?>" class="post-add-icon inline-items">
 									<svg class="olymp-speech-balloon-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
-									<span>16</span>
+									<span><?=count($comments)?></span>
 								</a>
 							</div>
 
@@ -74,10 +57,29 @@
                 <?php foreach ($comments as $comment): ?>
                   <li class="comment-item">
         						<div class="post__author author vcard inline-items">
-        							<img src="<?=base_url('assets/')?>img/avatar10-sm.jpg" alt="author">
-
+                      <?php
+                        $role_temp = $this->User_m->get_row(['username' => $comment->username])->role;
+                        if ($role_temp == 'mahasiswa' ) {
+                          $author = $this->Mahasiswa_m->get_row(['username' => $comment->username]);
+                        }
+                        if ($role_temp == 'admin' ) {
+                          $author = $this->Admin_m->get_row(['username' => $comment->username]);
+                        }
+                        if ($role_temp == 'dosen' ) {
+                          $author = $this->Dosen_m->get_row(['username' => $comment->username]);
+                        }
+                       ?>
+                      <?php if ($role_temp == 'mahasiswa'): ?>
+          							<img src="https://akademik.unsri.ac.id/images/foto_mhs/<?=$author->angkatan.'/'.$author->username.'.jpg'?>" alt="author">
+                      <?php endif; ?>
+                      <?php if ($role_temp == 'admin'): ?>
+          							<img alt="author" src="<?=base_url('assets/img/avatar1.jpg')?>" height="36" width="36" class="avatar">
+                      <?php endif; ?>
+                      <?php if ($role_temp == 'dosen'): ?>
+          							<img alt="author" src="<?=base_url('assets/img/avatar12-sm.jpg')?>" height="36" width="36" class="avatar">
+                      <?php endif; ?>
         							<div class="author-date">
-        								<a class="h6 post__author-name fn" href="#"><?=$comment->username?></a>
+        								<a class="h6 post__author-name fn" href="#"><?=$author->nama?></a>
         								<div class="post__date">
         									<time class="published">
                             <?=$comment->date?>
@@ -85,7 +87,15 @@
         								</div>
         							</div>
 
-        							<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+                      <?php if ($comment->username == $username): ?>
+                        <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+          								<ul class="more-dropdown">
+          									<li>
+          										<a href="javascript:delete_data(<?=$comment->id_komentar?>)">Hapus Komentar</a>
+          									</li>
+          								</ul>
+          							</div>
+                      <?php endif; ?>
 
         						</div>
 
@@ -96,10 +106,13 @@
             <?php endif; ?>
           <!-- end comments -->
 
+          <?php if ($role != 'guest'): ?>
           <!-- Comment form -->
           <?=form_open('home/post-detail?id='.$id,['class' => 'comment-form inline-items'])?>
   					<div class="post__author author vcard inline-items">
-  						<img src="<?=base_url('assets/')?>img/author-page.jpg" alt="author">
+              <?php if ($role == 'mahasiswa'): ?>
+    						<img src="https://akademik.unsri.ac.id/images/foto_mhs/<?=$profil->angkatan.'/'.$profil->username.'.jpg'?>" alt="author">
+              <?php endif; ?>
 
   						<div class="form-group with-icon-right ">
   							<textarea class="form-control" name="data"></textarea>
@@ -116,6 +129,7 @@
   					<button type="submit" class="btn btn-md-2 btn-primary">Post</button>
 				<?=form_close()?>
         <!-- end comment form -->
+          <?php endif; ?>
 
 					<!-- ... end Post -->
 				</div>
@@ -125,4 +139,32 @@
 <!-- ... end Main Content -->
 
 <script type="text/javascript">
+
+function delete_data(id) {
+      swal({
+        title: 'Konfirmasi',
+        text: 'Hapus Komentar?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+        })
+        .then((result) => {
+          if (result.value) {
+            $.ajax({
+                url: "<?= base_url('home/hapus_komentar') ?>",
+                type: 'POST',
+                data: {
+                    ID : id,
+                    delete : true
+                },
+                success: function() {
+                  location.reload();
+                }
+            });
+          }
+        });
+}
 </script>

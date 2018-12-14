@@ -8,13 +8,18 @@
                 <span class="bottom"></span>
               </div>
                 <a href="index.html" class="navbar-brand">
-                 <b>Admin BGKSS</b>
+                 <b>Dashboard</b>
                 </a>
 
               <ul class="nav navbar-nav navbar-right user-nav">
-                <li class="user-name"><span><?=$username?></span></li>
+                <li class="user-name"><span><?=$profil->nama?></span></li>
                   <li class="dropdown avatar-dropdown">
-                   <img src="<?=base_url('assets/admin')?>/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                    <?php if ($role == 'admin'): ?>
+                      <img src="<?=base_url('assets/img/avatar1.jpg')?>" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                    <?php endif; ?>
+                    <?php if ($role == 'dosen'): ?>
+                      <img src="<?=base_url('assets/img/avatar12-sm.jpg')?>" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                    <?php endif; ?>
                    <ul class="dropdown-menu user-dropdown">
                      <!-- <li><a href="#"><span class="fa fa-cogs"></span> Setting</a></li> -->
                      <li><a href="<?=base_url('logout')?>"><span class="fa fa-power-off"></span> Logout</a></li>

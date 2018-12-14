@@ -19,6 +19,6 @@ class User_m extends MY_Model
       return FALSE;
     }
     $this->session->set_userdata(['username' => $user->username, 'role' => $user->role]);
-    return TRUE
+    return TRUE;
   }
 }

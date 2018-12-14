@@ -38,9 +38,15 @@
                                 <td><?= substr(strip_tags($row->isi),0,200)?></td>
 																<td><?=$row->username?></td>
                                 <td width="100">
-                                  <a href="#" target="_blank" class="btn btn-primary">Preview <span class="fa fa-eye"></span></a>
+                                  <a href="<?=base_url('home/post-detail?id='.$row->id_info)?>" target="_blank" class="btn btn-primary">Preview <span class="fa fa-eye"></span></a>
                                   <a href="<?=base_url('admin/edit-informasi?id='.$row->id_info)?>" class="btn btn-success">Edit <span class="fa fa-pencil"></span></a>
                                   <button class="btn btn-danger" onclick="delete_data('<?=$row->id_info?>')">Delete <span class="fa fa-trash"></span></button>
+																	<?php if ($row->pinned == 0): ?>
+																		<button class="btn btn-default" onclick="pin('<?=$row->id_info?>')">Pin <span class="fa fa-heart"></span></button>
+																	<?php endif; ?>
+																	<?php if ($row->pinned == 1): ?>
+																		<button class="btn btn-warning" onclick="unpin('<?=$row->id_info?>')">Un-Pin <span class="fa fa-heart"></span></button>
+																	<?php endif; ?>
                                 </td>
                               </tr>
                               <?php endforeach;?>
@@ -86,6 +92,62 @@
               if (result.value) {
                 $.ajax({
                     url: "<?= base_url('admin/informasi') ?>",
+                    type: 'POST',
+                    data: {
+                        ID : id,
+                        delete : true
+                    },
+                    success: function() {
+                      location.reload();
+                    }
+                });
+              }
+            });
+    }
+
+		function pin(id) {
+          swal({
+            title: 'Konfirmasi',
+						text: 'Pin informasi ini?',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+            })
+            .then((result) => {
+              if (result.value) {
+                $.ajax({
+                    url: "<?= base_url('admin/pin-post') ?>",
+                    type: 'POST',
+                    data: {
+                        ID : id,
+                        delete : true
+                    },
+                    success: function() {
+                      location.reload();
+                    }
+                });
+              }
+            });
+    }
+
+		function unpin(id) {
+          swal({
+            title: 'Konfirmasi',
+						text: 'Un-Pin informasi ini?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+            })
+            .then((result) => {
+              if (result.value) {
+                $.ajax({
+                    url: "<?= base_url('admin/unpin-post') ?>",
                     type: 'POST',
                     data: {
                         ID : id,

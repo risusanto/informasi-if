@@ -22,7 +22,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
   <!-- end: Css -->
 
-  <link rel="shortcut icon" href="<?=base_url('assets/admin')?>/img/pudding_ellipse.png">
+  <link rel="shortcut icon" href="<?=base_url('assets/logo_hmif.png')?>">
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

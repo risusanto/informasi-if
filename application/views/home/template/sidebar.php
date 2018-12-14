@@ -3,65 +3,11 @@
 <div class="fixed-sidebar">
 	<div class="fixed-sidebar-left sidebar--small" id="sidebar-left">
 
-		<a href="02-ProfilePage.html" class="logo">
+		<a href="<?=base_url('home')?>" class="logo">
 			<div class="img-wrap">
-				<img src="<?=base_url('assets/')?>img/logo.png" alt="Olympus">
+				<img src="<?=base_url('assets/logo_hmif.png')?>" alt="Olympus">
 			</div>
 		</a>
-
-		<div class="mCustomScrollbar" data-mcs-theme="dark">
-			<ul class="left-menu">
-				<li>
-					<a href="#" class="js-sidebar-open">
-						<svg class="olymp-menu-icon left-menu-icon"  data-toggle="tooltip" data-placement="right"   data-original-title="OPEN MENU"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
-					</a>
-				</li>
-				<li>
-					<a href="03-Newsfeed.html">
-						<svg class="olymp-newsfeed-icon left-menu-icon" data-toggle="tooltip" data-placement="right"   data-original-title="NEWSFEED"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
-					</a>
-				</li>
-				<li>
-					<a href="16-FavPagesFeed.html">
-						<svg class="olymp-star-icon left-menu-icon"  data-toggle="tooltip" data-placement="right"   data-original-title="FAV PAGE"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
-					</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1">
-		<a href="02-ProfilePage.html" class="logo">
-			<div class="img-wrap">
-				<img src="<?=base_url('assets/')?>img/logo.png" alt="Olympus">
-			</div>
-			<div class="title-block">
-				<h6 class="logo-title">olympus</h6>
-			</div>
-		</a>
-
-		<div class="mCustomScrollbar" data-mcs-theme="dark">
-			<ul class="left-menu">
-				<li>
-					<a href="#" class="js-sidebar-open">
-						<svg class="olymp-close-icon left-menu-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
-						<span class="left-menu-title">Collapse Menu</span>
-					</a>
-				</li>
-				<li>
-					<a href="03-Newsfeed.html">
-						<svg class="olymp-newsfeed-icon left-menu-icon" data-toggle="tooltip" data-placement="right"   data-original-title="NEWSFEED"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
-						<span class="left-menu-title">Newsfeed</span>
-					</a>
-				</li>
-				<li>
-					<a href="16-FavPagesFeed.html">
-						<svg class="olymp-star-icon left-menu-icon"  data-toggle="tooltip" data-placement="right"   data-original-title="FAV PAGE"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
-						<span class="left-menu-title">Fav Pages Feed</span>
-					</a>
-				</li>
-			</ul>
-		</div>
 	</div>
 </div>
 
@@ -73,19 +19,19 @@
 <div class="fixed-sidebar fixed-sidebar-responsive">
 
 	<div class="fixed-sidebar-left sidebar--small" id="sidebar-left-responsive">
-		<a href="#" class="logo js-sidebar-open">
-			<img src="<?=base_url('assets/')?>img/logo.png" alt="Olympus">
+		<a href="<?=base_url('home')?>" class="logo js-sidebar-open">
+			<img src="<?=base_url('assets/logo_hmif.png')?>" alt="Olympus">
 		</a>
 
 	</div>
 
 	<div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1-responsive">
-		<a href="#" class="logo">
+		<a href="<?=base_url('home')?>" class="logo">
 			<div class="img-wrap">
-				<img src="<?=base_url('assets/')?>img/logo.png" alt="Olympus">
+				<img src="<?=base_url('assets/logo_hmif.png')?>" alt="Olympus" class="logo">
 			</div>
 			<div class="title-block">
-				<h6 class="logo-title">olympus</h6>
+				<h6 class="logo-title">Teknik Informatika</h6>
 			</div>
 		</a>
 
@@ -93,42 +39,102 @@
 
 			<div class="control-block">
 				<div class="author-page author vcard inline-items">
+						<?php if ($role != 'guest'): ?>
 					<div class="author-thumb">
-						<img alt="author" src="<?=base_url('assets/')?>img/author-page.jpg" class="avatar">
+							<?php if ($role == 'mahasiswa'): ?>
+								<img alt="author" src="https://akademik.unsri.ac.id/images/foto_mhs/<?=$profil->angkatan.'/'.$profil->username.'.jpg'?>" height="36" width="36" class="avatar">
+							<?php endif; ?>
+							<?php if ($role == 'admin'): ?>
+								<img alt="author" src="<?=base_url('assets/img/avatar1.jpg')?>" height="36" width="36" class="avatar">
+							<?php endif; ?>
+							<?php if ($role == 'dosen'): ?>
+								<img alt="author" src="<?=base_url('assets/img/avatar12-sm.jpg')?>" height="36" width="36" class="avatar">
+							<?php endif; ?>
 						<span class="icon-status online"></span>
 					</div>
-					<a href="02-ProfilePage.html" class="author-name fn">
+					<a href="javascript:void(0)" class="author-name fn">
 						<div class="author-title">
-							James Spiegel <svg class="olymp-dropdown-arrow-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
+							<?=$profil->nama?> <svg class="olymp-dropdown-arrow-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
 						</div>
-						<span class="author-subtitle">SPACE COWBOY</span>
+						<span class="author-subtitle"><?=strtoupper($role)?></span>
 					</a>
+					<?php endif; ?>
 				</div>
 			</div>
 
 			<div class="ui-block-title ui-block-title-small">
-				<h6 class="title">MAIN SECTIONS</h6>
+				<h6 class="title">YOUR ACCOUNT</h6>
 			</div>
 
-			<ul class="left-menu">
-				<li>
-					<a href="#" class="js-sidebar-open">
-						<svg class="olymp-close-icon left-menu-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
-						<span class="left-menu-title">Collapse Menu</span>
-					</a>
-				</li>
-				<li>
-					<a href="mobile-index.html">
-						<svg class="olymp-newsfeed-icon left-menu-icon" data-toggle="tooltip" data-placement="right"   data-original-title="NEWSFEED"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
-						<span class="left-menu-title">Newsfeed</span>
-					</a>
-				</li>
-				<li>
-					<a href="Mobile-28-YourAccount-PersonalInformation.html">
-						<svg class="olymp-star-icon left-menu-icon"  data-toggle="tooltip" data-placement="right"   data-original-title="FAV PAGE"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
-						<span class="left-menu-title">Fav Pages Feed</span>
-					</a>
-				</li>
+			<ul class="account-settings">
+				<?php if ($role == 'guest'): ?>
+					<li>
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#Daftar">
+
+							<svg class="olymp-menu-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-register-icon"></use></svg>
+
+							<span>Daftar</span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">
+							<svg class="olymp-logout-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-login-icon"></use></svg>
+
+							<span>Login</span>
+						</a>
+					</li>
+				<?php endif; ?>
+				<?php if ($role == 'mahasiswa'): ?>
+					<li>
+						<a href="javascript:void(0)">
+
+							<svg class="olymp-menu-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
+
+							<span>Pengaturan Akun</span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">
+							<svg class="olymp-logout-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-logout-icon"></use></svg>
+
+							<span>Logout</span>
+						</a>
+					</li>
+				<?php endif; ?>
+				<?php if ($role == 'admin'): ?>
+					<li>
+						<a href="<?=base_url('admin')?>">
+
+							<svg class="olymp-menu-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
+
+							<span>Dashboard admin</span>
+						</a>
+					</li>
+					<li>
+						<a href="<?=base_url('logout')?>">
+							<svg class="olymp-logout-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-logout-icon"></use></svg>
+
+							<span>Logout</span>
+						</a>
+					</li>
+				<?php endif; ?>
+				<?php if ($role == 'dosen'): ?>
+					<li>
+						<a href="<?=base_url('admin')?>">
+
+							<svg class="olymp-menu-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
+
+							<span>Dashboard admin</span>
+						</a>
+					</li>
+					<li>
+						<a href="<?=base_url('logout')?>">
+							<svg class="olymp-logout-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-logout-icon"></use></svg>
+
+							<span>Logout</span>
+						</a>
+					</li>
+				<?php endif; ?>
 			</ul>
 
 		</div>
