@@ -5,14 +5,27 @@
   <div id="newsfeed-items-grid">
     <div class="ui-block">
 					<!-- Post -->
-
+          <?php
+            $role_temp_1 = $this->User_m->get_row(['username' => $post->username])->role;
+            if ($role_temp_1 == 'admin' ) {
+              $author_1 = $this->Admin_m->get_row(['username' => $post->username]);
+            }
+            if ($role_temp_1 == 'dosen' ) {
+              $author_1 = $this->Dosen_m->get_row(['username' => $post->username]);
+            }
+           ?>
 					<article class="hentry post has-post-thumbnail">
 
 						<div class="post__author author vcard inline-items">
-							<img src="<?=base_url('assets/')?>img/author-page.jpg" alt="author">
+              <?php if ($role_temp_1 == 'admin'): ?>
+                <img alt="author" src="<?=base_url('assets/img/avatar1.jpg')?>" height="36" width="36" class="avatar">
+              <?php endif; ?>
+              <?php if ($role_temp_1 == 'dosen'): ?>
+                <img alt="author" src="<?=base_url('assets/img/avatar12-sm.jpg')?>" height="36" width="36" class="avatar">
+              <?php endif; ?>
 
 							<div class="author-date">
-								<a class="h6 post__author-name fn" href="02-ProfilePage.html"><?=$post->username?></a>
+								<a class="h6 post__author-name fn" href="javascript:void(0)"><?=$author_1->nama?></a>
 								<div class="post__date">
 									<time class="published" datetime="<?=$post->date?>">
 										<?=$post->date?>
