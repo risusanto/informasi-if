@@ -77,7 +77,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="javascript:void(0)">
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#Login">
 							<svg class="olymp-logout-icon"><use xlink:href="<?=base_url('assets/')?>svg-icons/sprites/icons.svg#olymp-login-icon"></use></svg>
 
 							<span>Login</span>
